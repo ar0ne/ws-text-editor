@@ -14,24 +14,26 @@ export default function TextEditor({ value }) {
         setText(event.target.value);
     };
 
+    function enqueueDiff(diff) {
+        if (diff.added.size > 0) {
+            msgQueue.enqueue({
+                type: "add",
+                diff: [...diff.added]
+            });
+        }
+        if (diff.removed.size > 0) {
+            msgQueue.enqueue({
+                type: "del",
+                diff: [...diff.removed]
+            });
+        }
+    }
+
     useEffect(() => {
         const timer = setTimeout(() => {
-            console.log("User stopped typing! Save or API call with:", text);
+            console.log("User stopped typing!");
             let diff = textMap.diffText(text);
-            console.log([...diff.added]);
-            console.log([...diff.removed]);
-            if (diff.added.size > 0) {
-                msgQueue.enqueue({
-                    type: "add",
-                    diff: [...diff.added]
-                });
-            }
-            if (diff.removed.size > 0) {
-                msgQueue.enqueue({
-                    type: "del",
-                    diff: [...diff.removed]
-                });
-            }
+            enqueueDiff(diff);
             textMap.map = textMap.applyDiff(diff);
         }, 500);
 
