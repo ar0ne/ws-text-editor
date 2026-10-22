@@ -2,36 +2,30 @@
 import { TreeMap, Queue } from 'data-structure-typed';
 
 
-function emptyMap() {
-    let tm = new TreeMap();
-    tm.set(0, null);
-    tm.set(1, null);
-    return tm;
-}
+const TEXT_TOKENIZER_REGEX = /[a-zA-Z0-9]+|\s+|[^a-zA-Z0-9\s]+/g;
 
-class TextTree {
+export default class TextMap {
 
-    #treeMap;
+    #map;
 
     constructor() {
-        this.#treeMap = new TreeMap();
+        this.#map = new TreeMap();
     }
 
     tokenize(text) {
-        return text.match(/[a-zA-Z]+|\s+|[^a-zA-Z\s]+/g) ?? [];
+        return text.match(TEXT_TOKENIZER_REGEX) ?? [];
     }
 
-    getMap() {
-        return this.#treeMap;
+    get() {
+        return this.#map;
     }
 
-    setMap(newMap) {
-        this.#treeMap = newMap;
+    set(newMap) {
+        this.#map = newMap;
     }
 
-
-    diffText(oldMap, newText) {
-        const oldEntries = [...oldMap]
+    diffText(newText) {
+        const oldEntries = [...this.get()]
             .filter(([key]) => typeof key === 'number' && key > 0 && key < 1)
             .map(([position, text]) => ({ position, text }));
 
@@ -103,11 +97,11 @@ class TextTree {
         return { added, removed };
     }
 
-    applyDiff(oldMap, diff) {
+    applyDiff(diff) {
         const updated = new TreeMap();
 
         // Copy everything from the old map, preserving existing keys.
-        for (const [key, value] of oldMap) {
+        for (const [key, value] of this.get()) {
             updated.set(key, value);
         }
 
@@ -125,10 +119,7 @@ class TextTree {
     }
 
     toString() {
-        return Array.from(this.#treeMap.values()).join('');
+        return Array.from(this.get().values()).join('');
     }
 
 }
-
-
-export { TextTree };

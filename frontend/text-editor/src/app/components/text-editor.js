@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 
-import { TextTree } from '../utils/strings';
+import TextMap from '../utils/text-map';
 
 export default function TextEditor({ value }) {
 
     const [text, setText] = useState(value);
-    const [textTree] = useState(new TextTree());
+    const [textMap] = useState(new TextMap());
 
     const handleChange = (event) => {
         setText(event.target.value);
@@ -16,10 +16,10 @@ export default function TextEditor({ value }) {
     useEffect(() => {
         const timer = setTimeout(() => {
             console.log("User stopped typing! Save or API call with:", text);
-            let diff = textTree.diffText(textTree.getMap(), text);
+            let diff = textMap.diffText(text);
             console.log([...diff.added]);
             console.log([...diff.removed]);
-            textTree.setMap(textTree.applyDiff(textTree.getMap(), diff));
+            textMap.set(textMap.applyDiff(diff));
         }, 500);
 
         return () => clearTimeout(timer);
