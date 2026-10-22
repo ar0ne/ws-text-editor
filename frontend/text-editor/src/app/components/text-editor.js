@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 
 import TextMap from '../utils/text-map';
+import { msgQueue } from '../services/message-service';
 
 export default function TextEditor({ value }) {
 
@@ -19,7 +20,19 @@ export default function TextEditor({ value }) {
             let diff = textMap.diffText(text);
             console.log([...diff.added]);
             console.log([...diff.removed]);
-            textMap.set(textMap.applyDiff(diff));
+            if (diff.added.size > 0) {
+                msgQueue.enqueue({
+                    type: "add",
+                    diff: [...diff.added]
+                });
+            }
+            if (diff.removed.size > 0) {
+                msgQueue.enqueue({
+                    type: "del",
+                    diff: [...diff.removed]
+                });
+            }
+            textMap.map = textMap.applyDiff(diff);
         }, 500);
 
         return () => clearTimeout(timer);

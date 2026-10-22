@@ -16,16 +16,16 @@ export default class TextMap {
         return text.match(TEXT_TOKENIZER_REGEX) ?? [];
     }
 
-    get() {
+    get map() {
         return this.#map;
     }
 
-    set(newMap) {
+    set map(newMap) {
         this.#map = newMap;
     }
 
     diffText(newText) {
-        const oldEntries = [...this.get()]
+        const oldEntries = [...this.map]
             .filter(([key]) => typeof key === 'number' && key > 0 && key < 1)
             .map(([position, text]) => ({ position, text }));
 
@@ -101,7 +101,7 @@ export default class TextMap {
         const updated = new TreeMap();
 
         // Copy everything from the old map, preserving existing keys.
-        for (const [key, value] of this.get()) {
+        for (const [key, value] of this.map) {
             updated.set(key, value);
         }
 
