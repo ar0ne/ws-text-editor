@@ -9,12 +9,13 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "data-structure-typed": "^2.6.4",
     "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
   "devDependencies": {
     "eslint": "^9",
-    "eslint-config-next": "16.4.2"
+    "eslint-config-next": "^14.2.35"
   }
 }
