@@ -1,6 +1,4 @@
-
 import MessageQueue from "./message-queue";
-import { userIdentityService } from "./mock-user-service";
 import RealTimeClient from "./realtime-client";
 
 
@@ -15,22 +13,30 @@ function escape(value) {
 }
 
 function encodeMessage(message) {
-  return `${message.userId}::${message.type === 'add' ? '+' : '-'}{${message.diff
+  return `${message.type === 'add' ? '+' : '-'}{${message.diff
     .map(([k, v]) => `${k}:${escape(v)}`)
     .join(",")}}}`
 }
 
 class MessageService {
 
-    constructor(url, options) {
+    constructor(url, topic, options) {
         this.url = url;
-        this.queue = new MessageQueue((userId, msgs) => this.sendBatch(userId, msgs), options);
-        this.realtimeClient = new RealTimeClient(url, (msg) => this.handleMessage(msg));
+        this.topic = topic;
+        this.queue = new MessageQueue(
+            (msgs) => this.sendBatch(msgs), 
+            options
+        );
+        this.realtimeClient = new RealTimeClient(url);
         this.realtimeClient.connect();
     }
 
-    subscribeToTopic(topic) {
-        this.realtimeClient.subscribe(topic);
+    subscribeToTopic(callback) {
+        this.realtimeClient.subscribe(this.topic, (msg) => {
+            // here we would decode and apply if userId is not current user
+            console.log("received:" + msg);
+            callback(msg);
+        });
     }
 
     handleMessage(message) {
@@ -38,12 +44,12 @@ class MessageService {
     }
 
     async sendBatch(messages) {
-        let encodedMessages = messages.map(m => encodeMessage(m))
+        let userId = messages.peek().userId;
+        let encodedMessages = userId + messages.map(m => encodeMessage(m))
             .join("::");
-        console.log("Sending messages:", encodedMessages);
-        // await sleep(1000);
-        this.realtimeClient.publish("foo", encodedMessages);
-        console.log("Sent");
+        console.log("Sending batch:", encodedMessages);
+        this.realtimeClient.publish(this.topic, encodedMessages);
+        console.log("Batch was send");
     }
 
     enqueueMessage(message) {
@@ -56,7 +62,9 @@ class MessageService {
 }
 
 export const messageService = new MessageService(
-    "ws://localhost:8080/ws", {
+    "ws://localhost:8080/ws", 
+    "my-topic",
+    {
         batchSize: 2,
         flushInterval: 1000,
     }

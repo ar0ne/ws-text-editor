@@ -18,7 +18,6 @@ export default function TextEditor({ value }) {
     };
 
     function submitMessage(diff) {
-
         if (diff.added.size > 0) {
             messageService.enqueueMessage({
                 userId: userId,
@@ -36,6 +35,8 @@ export default function TextEditor({ value }) {
     }
 
     useEffect(() => {
+        if (!userId) return;
+
         const timer = setTimeout(() => {
             console.log("User stopped typing!");
             let diff = textMap.diffText(text);
@@ -44,7 +45,14 @@ export default function TextEditor({ value }) {
         }, 500);
 
         return () => clearTimeout(timer);
-    }, [text]);
+    }, [userId, text]);
+
+    useEffect(() => {
+        let unsubscribe = messageService.subscribeToTopic((msg) => {
+            console.log("Update something on UI: " + msg);
+        });
+        return unsubscribe;
+    }, [userId]);
 
     return (
         <div className="text-editor">

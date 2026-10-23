@@ -6,18 +6,24 @@ import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Sinks;
 
 @Component
 public class ReactiveWebSocketHandler implements WebSocketHandler {
+
+    private final Sinks.Many<String> sinks = Sinks.many().multicast().onBackpressureBuffer();
+
+    private final Flux<String> flux = sinks.asFlux();
+
     @Override
     public Mono<Void> handle(WebSocketSession session) {
-        Flux<String> inboundSignal = session.receive()
+        Mono<Void> input = session.receive()
                 .map(WebSocketMessage::getPayloadAsText)
-                .map(msg -> "{\"status\": \"ok\"}");
+                .doOnNext(sinks::tryEmitNext)
+                .then();
 
-        Flux<WebSocketMessage> outboundSignals = inboundSignal
-                .map(session::textMessage);
+        Mono<Void> output = session.send(flux.map(session::textMessage));
 
-        return session.send(outboundSignals);
+        return Mono.zip(input, output).then();
     }
 }
