@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5f67b5ab-1cef-40f4-b041-e1e0795c5ccd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/frontend/text-editor/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/text-editor/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/text-editor/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/text-editor/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/text-editor/src/app/components/text-editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/text-editor/src/app/components/text-editor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/text-editor/src/app/services/message-service.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/text-editor/src/app/services/message-service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/text-editor/src/app/utils/text-map.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/text-editor/src/app/utils/text-map.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DBNavigator.Project.Workspace.Settings">
+    <assistant-settings>
+      <credential-settings>
+        <credentials />
+      </credential-settings>
+      <profile-settings>
+        <profiles />
+      </profile-settings>
+      <mcp-server-settings>
+        <workspace-integration value="false" />
+        <mcp-servers />
+        <mcp-tool-approvals />
+      </mcp-server-settings>
+    </assistant-settings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3L5rbTQpY8lfgjLAOCQJBdPLmWs" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/ar0ne/Codes/ws-text-editor/backend/docs"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f67b5ab-1cef-40f4-b041-e1e0795c5ccd" name="Changes" comment="" />
+      <created>1792754842092</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1792754842092</updated>
+    </task>
+    <servers />
+  </component>
+</project>
