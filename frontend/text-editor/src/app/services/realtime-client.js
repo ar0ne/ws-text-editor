@@ -39,7 +39,6 @@ export default class RealTimeClient {
         }));
     }
 
-
     subscribe(topic) {
         this.socket?.send(JSON.stringify({
             type: "subscribe",

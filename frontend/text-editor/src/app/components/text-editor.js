@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 
 import TextMap from '../utils/text-map';
-import { messageQueue } from '../services/message-service';
+import { messageService } from '../services/message-service';
+
 
 export default function TextEditor({ value }) {
 
@@ -16,13 +17,13 @@ export default function TextEditor({ value }) {
 
     function enqueueDiff(diff) {
         if (diff.added.size > 0) {
-            messageQueue.enqueue({
+            messageService.enqueueMessage({
                 type: "add",
                 diff: [...diff.added]
             });
         }
         if (diff.removed.size > 0) {
-            messageQueue.enqueue({
+            messageService.enqueueMessage({
                 type: "del",
                 diff: [...diff.removed]
             });

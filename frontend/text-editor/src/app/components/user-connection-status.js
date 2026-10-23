@@ -1,9 +1,9 @@
 
 
-export default function UserConnectionStatus({ userName, isConnected }) {
+export default function UserConnectionStatus({ userId, isConnected }) {
     return (
         <div>
-            <span><b>Username:</b> {userName}</span><br/>
+            <span><b>User:</b> {userId}</span><br/>
             <span>{isConnected ? "Connected" : "Disconnected"}</span>
         </div>
     );

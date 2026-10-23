@@ -79,7 +79,6 @@ export default class MessageQueue {
         return this.queue.length;
     }
 
-
     destroy() {
         if (this.timer) {
             clearTimeout(this.timer);
