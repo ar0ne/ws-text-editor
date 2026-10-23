@@ -6,26 +6,26 @@ const TEXT_TOKENIZER_REGEX = /[a-zA-Z0-9]+|\s+|[^a-zA-Z0-9\s]+/g;
 
 export default class TextMap {
 
-    #map;
+    #data;
 
     constructor() {
-        this.#map = new TreeMap();
+        this.#data = new TreeMap();
     }
 
     tokenize(text) {
         return text.match(TEXT_TOKENIZER_REGEX) ?? [];
     }
 
-    get map() {
-        return this.#map;
+    get data() {
+        return this.#data;
     }
 
-    set map(newMap) {
-        this.#map = newMap;
+    set data(newMap) {
+        this.#data = newMap;
     }
 
     diffText(newText) {
-        const oldEntries = [...this.map]
+        const oldEntries = [...this.data]
             .filter(([key]) => typeof key === 'number' && key > 0 && key < 1)
             .map(([position, text]) => ({ position, text }));
 
@@ -101,7 +101,7 @@ export default class TextMap {
         const updated = new TreeMap();
 
         // Copy everything from the old map, preserving existing keys.
-        for (const [key, value] of this.map) {
+        for (const [key, value] of this.data) {
             updated.set(key, value);
         }
 

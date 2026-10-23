@@ -12,7 +12,8 @@
     "data-structure-typed": "^2.6.4",
     "next": "16.4.2",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "ws": "^8.22.0"
   },
   "devDependencies": {
     "eslint": "^9",

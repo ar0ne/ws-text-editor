@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 import TextMap from '../utils/text-map';
-import { msgQueue } from '../services/message-service';
+import { messageQueue } from '../services/message-service';
 
 export default function TextEditor({ value }) {
 
@@ -16,13 +16,13 @@ export default function TextEditor({ value }) {
 
     function enqueueDiff(diff) {
         if (diff.added.size > 0) {
-            msgQueue.enqueue({
+            messageQueue.enqueue({
                 type: "add",
                 diff: [...diff.added]
             });
         }
         if (diff.removed.size > 0) {
-            msgQueue.enqueue({
+            messageQueue.enqueue({
                 type: "del",
                 diff: [...diff.removed]
             });
@@ -34,7 +34,7 @@ export default function TextEditor({ value }) {
             console.log("User stopped typing!");
             let diff = textMap.diffText(text);
             enqueueDiff(diff);
-            textMap.map = textMap.applyDiff(diff);
+            textMap.data = textMap.applyDiff(diff);
         }, 500);
 
         return () => clearTimeout(timer);
