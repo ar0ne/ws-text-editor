@@ -6,8 +6,6 @@ import RealTimeClient from "./realtime-client";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const userId = userIdentityService.getUserId();
-
 function escape(value) {
     return value
         .replaceAll("{", "\\{")
@@ -17,7 +15,7 @@ function escape(value) {
 }
 
 function encodeMessage(message) {
-  return `${message.type === 'add' ? '+' : '-'}{${message.diff
+  return `${message.userId}::${message.type === 'add' ? '+' : '-'}{${message.diff
     .map(([k, v]) => `${k}:${escape(v)}`)
     .join(",")}}}`
 }
@@ -26,7 +24,7 @@ class MessageService {
 
     constructor(url, options) {
         this.url = url;
-        this.queue = new MessageQueue((msgs) => this.sendBatch(userId, msgs), options);
+        this.queue = new MessageQueue((userId, msgs) => this.sendBatch(userId, msgs), options);
         this.realtimeClient = new RealTimeClient(url, (msg) => this.handleMessage(msg));
         this.realtimeClient.connect();
     }
@@ -39,8 +37,8 @@ class MessageService {
         console.log(message);
     }
 
-    async sendBatch(userId, messages) {
-        let encodedMessages = userId + "::" + messages.map(m => encodeMessage(m))
+    async sendBatch(messages) {
+        let encodedMessages = messages.map(m => encodeMessage(m))
             .join("::");
         console.log("Sending messages:", encodedMessages);
         // await sleep(1000);
